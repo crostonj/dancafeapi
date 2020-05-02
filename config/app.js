@@ -10,7 +10,7 @@ module.exports = function () {
         start;
 
     create = (config, db) => {
-        let routes = require('../routes/apis');
+        let routes = require("../routes");
         // set all the server things
         server.set('env', config.env);
         server.set('port', config.port);

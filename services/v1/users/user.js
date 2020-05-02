@@ -1,7 +1,8 @@
 //users.js (server/services/v1/users/users.js)
 
-const express = require('express');
-const userModel = require('../../../models/user');
+var storage = require('../../../storage/cafedb');
+
+//const userModel = require('../../../models/userModel');
 
 const getUserDetails = async (req,res,next) => {
 
@@ -14,7 +15,7 @@ const getUserDetails = async (req,res,next) => {
             "errors":[{
                 "msg" : " no user found"
             }]
-        })
+        });
     }
 
     return res.status(200).json({
@@ -22,9 +23,16 @@ const getUserDetails = async (req,res,next) => {
             "msg" : " user fetched successfully",
             "data" : user
         }]
-    })
+    });
+}
+
+var create = function(user){
+    
+    storage.insertUser(user);
 }
 
 module.exports = {
-    getUserDetails : getUserDetails
-}
+        getUserDetails: getUserDetails,
+        create : create
+    };
+
