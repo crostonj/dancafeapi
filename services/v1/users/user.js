@@ -1,15 +1,14 @@
 //users.js (server/services/v1/users/users.js)
 
-var storage = require('../../../storage/cafedb');
-
-//const userModel = require('../../../models/userModel');
+var userModel = require('../../../models/userModel');
 
 const getUserDetails = async (req,res,next) => {
 
-    let { userId } = req.params;
+    let { info } = req.body;
 
-    let user = await userModel.findById(userId).select('name , email');
-
+//    let user = await userModel.findById(userId).select('name , email');
+    var user = await userModel.FindByKey({"email" : info.email});
+    
     if(!user){
         return res.status(404).json({
             "errors":[{

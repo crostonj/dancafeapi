@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator/check');
 
 const config = require('../../../config/env_config/config');
-const userModel = require('../../../models/user');
+const userModel = require('../../../models/userModel');
 
 const register = async (req,res,next) => {
     const errors = validationResult(req);
@@ -17,7 +17,7 @@ const register = async (req,res,next) => {
 
     let { name, email , password } = req.body;
 
-    let isEmailExists = await userModel.findOne({"email" : email});
+    let isEmailExists = await userModel.FindByKey({"email" : email});
 
     if(isEmailExists){
         return res.status(409).json({
@@ -30,7 +30,7 @@ const register = async (req,res,next) => {
     let hashedPassword = await bcrypt.hash(password, 8);
 
     try{
-        let user = await userModel.create({
+        let user = await userModel.Insert({
             name : name,
             email: email,
             password : hashedPassword

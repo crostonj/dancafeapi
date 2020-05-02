@@ -20,17 +20,6 @@ var userTable = function(){
 
         var tableService = azure.createTableService();
 
-        var entGen = azure.TableUtilities.entityGenerator;
-        var entity = {
-            PartitionKey: entGen.String('part2'),
-            RowKey: entGen.String('row1'),
-            boolValueTrue: entGen.Boolean(true),
-            boolValueFalse: entGen.Boolean(false),
-            intValue: entGen.Int32(42),
-            dateValue: entGen.DateTime(new Date(Date.UTC(2011, 10, 25))),
-            complexDateValue: entGen.DateTime(new Date(Date.UTC(2013, 02, 16, 01, 46, 20)))
-        };
-
         const item = req.body;
         item["PartitionKey"] = "Partition";
         item["RowKey"] = uuid();

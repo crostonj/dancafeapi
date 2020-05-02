@@ -2,7 +2,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 //const mongoose = require('mongoose');
-const expressValidator = require('express-validator')
+const expressValidator = require('express-validator');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var path = require('path');
+
 
 module.exports = function () {
     let server = express(),
@@ -17,13 +21,13 @@ module.exports = function () {
         server.set('hostname', config.hostname);
         
         // add middleware to parse the json
-        app.use(logger('dev'));
-        app.use(express.json());
-        app.use(express.urlencoded({ extended: false }));
-        app.use(cookieParser());
-        app.use(express.static(path.join(__dirname, 'public')));
-                server.use(bodyParser.json());
-        server.use(expressValidator())
+        server.use(logger('dev'));
+        server.use(express.json());
+        server.use(express.urlencoded({ extended: false }));
+        server.use(cookieParser());
+        server.use(express.static(path.join(__dirname, 'public')));
+        server.use(bodyParser.json());
+        //server.use(expressValidator())
 
         //connect the database
         //mongoose.connect(
