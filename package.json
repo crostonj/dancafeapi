@@ -4,7 +4,8 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "debug": "node --nolazy --inspect-brk=9229 server.js"
   },
   "dependencies": {
     "azure-storage": "^2.10.3",
