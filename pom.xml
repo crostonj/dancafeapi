@@ -35,6 +35,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.microsoft.azure</groupId>
+			<artifactId>spring-cloud-azure-storage</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
 			<artifactId>azure-storage-spring-boot-starter</artifactId>
 		</dependency>
 
@@ -76,5 +81,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
