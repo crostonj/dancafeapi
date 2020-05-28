@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/Profile")
+@RestController()
+@RequestMapping("/Profile")
 public class ProfileController {
 
     private final ProfileRepository profileRepository;
@@ -20,7 +20,7 @@ public class ProfileController {
         this.profileDAL = profileDAL;
     }
 
-    @GetMapping(value = "")
+    @GetMapping()
     public List<ProfileEntity> getAllUsers() {
         return profileRepository.findAll();
     }
