@@ -22,7 +22,6 @@ public class ProfileController {
 
     @GetMapping(value = "")
     public List<ProfileEntity> getAllUsers() {
-        //LOG.info("Getting all users.");
         return profileRepository.findAll();
     }
 
