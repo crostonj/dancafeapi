@@ -1,33 +1,20 @@
 package com.danscafe.siteapi.model;
 
-public class UserEntity {
-    private String password;
-    private String username;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
-    public UserEntity(String password, String username) {
-        this.password = password;
-        this.username = username;
+import java.util.Collection;
+
+@Document
+public class UserEntity extends User {
+
+    @Id
+    private String ID;
+
+    public UserEntity(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, authorities);
     }
-
-    public UserEntity() {
-    }
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
 
 }

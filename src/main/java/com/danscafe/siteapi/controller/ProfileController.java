@@ -1,7 +1,7 @@
 package com.danscafe.siteapi.controller;
 
-import com.danscafe.siteapi.dal.ProfileDAL;
-import com.danscafe.siteapi.model.Profile;
+import com.danscafe.siteapi.dal.profile.ProfileDAL;
+import com.danscafe.siteapi.model.ProfileEntity;
 import com.danscafe.siteapi.repository.ProfileRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,27 +21,27 @@ public class ProfileController {
     }
 
     @GetMapping(value = "")
-    public List<Profile> getAllUsers() {
+    public List<ProfileEntity> getAllUsers() {
         //LOG.info("Getting all users.");
         return profileRepository.findAll();
     }
 
     @GetMapping(value = "/{profileId}")
-    public Profile getProfile(@PathVariable String profileId) {
+    public ProfileEntity getProfile(@PathVariable String profileId) {
         //LOG.info("Getting user with ID: {}.", userId);
         return profileRepository.findById(profileId).orElse(null);
     }
 
     @PostMapping(value = "/create")
-    public Profile addNewProfiles(@RequestBody Profile profile) {
+    public ProfileEntity addNewProfiles(@RequestBody ProfileEntity profileEntity) {
         //LOG.info("Saving user.");
-        return profileRepository.save(profile);
+        return profileRepository.save(profileEntity);
     }
 
     @GetMapping(value = "/settings/{profileId}")
     public Object getAllProfileSetting(@PathVariable String profileId) {
-        Profile profile = profileRepository.findById(profileId).orElse(null);
-        if (profile != null) {
+        ProfileEntity profileEntity = profileRepository.findById(profileId).orElse(null);
+        if (profileEntity != null) {
             return profileDAL.getAllProfileSettings(profileId);
         } else {
             return "User not found.";
@@ -51,8 +51,8 @@ public class ProfileController {
 
     @GetMapping(value = "/settings/{profileId}/{key}")
     public String getProfileSetting(@PathVariable String profileId, @PathVariable String key) {
-        Profile profile = profileRepository.findById(profileId).orElse(null);
-        if (profile != null) {
+        ProfileEntity profileEntity = profileRepository.findById(profileId).orElse(null);
+        if (profileEntity != null) {
             return profileDAL.getProfileSettings(profileId, key);
         } else {
             return "Profile not found.";

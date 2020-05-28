@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Document
-public class Profile {
+public class ProfileEntity {
     @Id
     private String profileId;
     private String name;
