@@ -19,4 +19,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with usename: " + username);
         }
     }
+    //public UserDetails InsertUpdateUser(User user){
+
+    //}
 }
