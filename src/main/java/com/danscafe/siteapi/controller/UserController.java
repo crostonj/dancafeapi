@@ -3,10 +3,10 @@ package com.danscafe.siteapi.controller;
 import com.danscafe.siteapi.dal.user.UserDAL;
 import com.danscafe.siteapi.model.UserEntity;
 import com.danscafe.siteapi.repository.UserRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController()
 @RequestMapping("/User")
@@ -29,8 +29,8 @@ public class UserController {
         return userEntity;
     }
 
-    @PostMapping()
-    public UserEntity save(UserEntity userEntity){
+    @PostMapping(value = "/Create")
+    public UserEntity create(@RequestBody UserEntity userEntity){
         return userDAL.createUser(userEntity);
     }
 }
