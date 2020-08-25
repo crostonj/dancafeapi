@@ -63,6 +63,15 @@
 			<artifactId>azure-storage</artifactId>
 			<version>8.6.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.danscafe</groupId>
+			<artifactId>siteapi</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

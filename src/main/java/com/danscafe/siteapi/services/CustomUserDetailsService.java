@@ -1,7 +1,7 @@
 package com.danscafe.siteapi.services;
 
 import com.danscafe.siteapi.model.Role;
-import com.danscafe.siteapi.model.UserEntity;
+import com.danscafe.siteapi.model.User;
 import com.danscafe.siteapi.repository.RoleRepository;
 import com.danscafe.siteapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +26,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
-    public UserEntity findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<User> findUser(String id) {
+        return userRepository.findById(id);
     }
 
-    public void saveUser(UserEntity user) {
+    public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         Role userRole = roleRepository.findByRole("ADMIN");
@@ -41,9 +41,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        UserEntity user = userRepository.findByEmail(email);
-        if(user != null) {
-            List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
+        Optional<User> user = userRepository.findById(email);
+        if(user.isPresent()) {
+            List<GrantedAuthority> authorities = getUserAuthority(user.get().getRoles());
             return buildUserForAuthentication(user, authorities);
         } else {
             throw new UsernameNotFoundException("username not found");
@@ -61,7 +61,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return grantedAuthorities;
     }
 
-    private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+    private UserDetails buildUserForAuthentication(Optional<User> user, List<GrantedAuthority> authorities) {
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), authorities);
     }
 }

@@ -1,18 +1,18 @@
 package com.danscafe.siteapi.dal.profile;
 
-import com.danscafe.siteapi.model.ProfileEntity;
+import com.danscafe.siteapi.model.Profile;
 
 import java.util.List;
 
 public interface ProfileDAL {
 
-    List<ProfileEntity> getAllProfile();
+    List<Profile> getAllProfile();
 
-    ProfileEntity getProfileById(String profileId);
+    Profile getProfileById(String profileId);
 
-    ProfileEntity getProfileByUserId(String userId);
+    Profile getProfileByUserId(String userId);
 
-    ProfileEntity addProfile(ProfileEntity profileEntity);
+    Profile addProfile(Profile profileEntity);
 
     Object getAllProfileSettings(String profileId);
 

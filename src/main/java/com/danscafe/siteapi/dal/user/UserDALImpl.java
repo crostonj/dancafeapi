@@ -1,7 +1,6 @@
 package com.danscafe.siteapi.dal.user;
 
-import com.danscafe.siteapi.model.ProfileEntity;
-import com.danscafe.siteapi.model.UserEntity;
+import com.danscafe.siteapi.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -16,20 +15,20 @@ public class UserDALImpl implements UserDAL{
     private MongoTemplate mongoTemplate;
 
     @Override
-    public UserEntity createUser(UserEntity userEntity) {
+    public User createUser(User userEntity) {
         mongoTemplate.save(userEntity);
         return userEntity;
     }
 
     @Override
-    public UserEntity getUser(String username) {
+    public User getUser(String username) {
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(username));
-        return mongoTemplate.findOne(query, UserEntity.class);
+        return mongoTemplate.findOne(query, User.class);
     }
 
     @Override
-    public UserEntity save(UserEntity userEntity) {
+    public User save(User userEntity) {
         mongoTemplate.save(userEntity);
         return userEntity;
     }

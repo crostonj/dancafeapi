@@ -3,7 +3,7 @@ package com.danscafe.siteapi.controller;
 import com.danscafe.siteapi.config.JwtTokenUtil;
 import com.danscafe.siteapi.model.JwtRequest;
 import com.danscafe.siteapi.model.JwtResponse;
-import com.danscafe.siteapi.model.UserEntity;
+import com.danscafe.siteapi.model.User;
 import com.danscafe.siteapi.repository.UserRepository;
 import com.danscafe.siteapi.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +13,17 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@CrossOrigin
+@RequestMapping("/api/auth")
 public class JwtAuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -41,18 +38,20 @@ public class JwtAuthenticationController {
 	private CustomUserDetailsService userService;
 
     @PostMapping(value = "/authenticate")
+	@CrossOrigin
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 		final UserDetails userDetails = userService
-				.loadUserByUsername(authenticationRequest.getEmail());
+				.loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
+    @CrossOrigin
 	private void authenticate(String username, String password) throws Exception {
 		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
@@ -67,10 +66,11 @@ public class JwtAuthenticationController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity register(@RequestBody UserEntity user) {
-		UserEntity userExists = userService.findUserByEmail(user.getEmail());
-		if (userExists != null) {
-			throw new BadCredentialsException("User with username: " + user.getEmail() + " already exists");
+	@CrossOrigin
+	public ResponseEntity register(@RequestBody User user) {
+		Optional<User> userExists = userService.findUser(user.getUsername());
+		if (userExists.isPresent()) {
+			throw new BadCredentialsException("User with username: " + user.getUsername() + " already exists");
 		}
 		userService.saveUser(user);
 		Map<Object, Object> model = new HashMap<>();

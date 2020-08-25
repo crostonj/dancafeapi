@@ -1,9 +1,9 @@
 package com.danscafe.siteapi.dal.user;
 
-import com.danscafe.siteapi.model.UserEntity;
+import com.danscafe.siteapi.model.User;
 
 public interface UserDAL {
-    UserEntity createUser(UserEntity userEntity);
-    UserEntity getUser(String username);
-    UserEntity save(UserEntity userEntity);
+    User createUser(User userEntity);
+    User getUser(String username);
+    User save(User userEntity);
 }
